@@ -37,6 +37,7 @@ function MathQuest() {
     // Reset input on correct
     if (data.status === "success") {
       setUserAnswer("");
+      alert(data.message);
     }
   };
 

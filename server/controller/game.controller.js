@@ -3,6 +3,7 @@ import Session from "../utils/Sessionconfig.js";
 const PlayGame = (req, res)=> {
 // console.log("do addition")
 const { userAnswer } = req.body;
+    console.log("Request received:", req.body);
     if(Session.step == "Addition"){
     if (userAnswer === undefined || userAnswer === "") {
         const num1 = Math.floor(Math.random() * 50) + 1;
@@ -54,7 +55,25 @@ const { userAnswer } = req.body;
             return res.status(200).json({status : "success", message : "Correct Now guess hidden Number", step : "GuessNumber"})
         }
         return res.status(400).json({status : "unsuccess", message: "Wrong Subraction", step: "subraction"})   
-    } 
-}  
+    }
+        
+    if(Session.step == "GuessNumber" ){
+        console.log("New hidden number:", Session.hiddenNumber);
+        if(Number(userAnswer) ===  Session.hiddenNumber){
+            const hiddennumb =  Session.hiddenNumber
+
+            Session.step = "addition";
+            Session.hiddenNumber = Math.floor(Math.random()*10)+1;
+            console.log("New hidden number:", Session.hiddenNumber);
+            Session.num1 = null;
+            Session.num2 = null;
+            Session.correctAnswer = null;
+
+            return res.status(200).json({status: "success",message: `Congrats! You guessed the number ${hiddennumb}`,step: "end"})
+        }
+
+        return res.json({status: "fail",message: "Wrong guess, try again",step: "guessNumber"})
+    }
+}; 
 
 export { PlayGame}
