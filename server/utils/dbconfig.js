@@ -35,7 +35,7 @@ const sql = async (query, params = []) => {
     const [rows] = await db.query(query, params); 
     return rows;
   } catch (error) {
-    logger.error("SQL Error:", error);
+    console.log("db error",error)
     throw error;
   }
 };
