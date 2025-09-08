@@ -4,6 +4,6 @@ import { PlayGame } from '../controller/game.controller.js';
 
 const router = express.Router();
 
-router.route('/game').post(PlayGame)
+router.route('/').post(PlayGame)
 
 export default router

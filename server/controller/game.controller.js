@@ -14,18 +14,26 @@ const { userAnswer } = req.body;
 
     if (Number(userAnswer) === Session.correctAnswer) {
         Session.step = "subtraction";
-        Session.num1 = Math.floor(Math.random()* 50)+1;
-        Session.num2 = Math.floor(Math.random()* 50)+1;
-
-        Session.correctAnswer = Session.num1 - Session.num2 
-        return res.status(200).json({status: "success",message: "Correct Answer"});
+        // Session.num1 = Math.floor(Math.random()* 50)+1;
+        // Session.num2 = Math.floor(Math.random()* 50)+1;
+        let num1 = Math.floor(Math.random() * 50);
+            let num2 = Math.floor(Math.random() * 50);
+            if(num1 < num2 ){
+                [num1, num2] = [num2, num1];
+            }
+            Session.num1 = num1
+            Session.num2 = num2
+            Session.correctAnswer = num1 - num2
+            Session.correctAnswer = Session.num1 - Session.num2 
+        return res.json({status: "pending",message: "Correct! Now solve this subtraction",data: {num1 : Session.num1, num2 : Session.num2 },step: "subtraction"
+        });
     }
   return res.status(401).json({status: "unsuccess", message: "Wrong Answer, try again"});
 }
     if(Session.step == "subtraction"){
         // subraction logic
         if (userAnswer === undefined || userAnswer === ""){
-
+            if(!Session.num1 || !Session.num2){
             let num1 = Math.floor(Math.random() * 50);
             let num2 = Math.floor(Math.random() * 50);
 
@@ -36,6 +44,7 @@ const { userAnswer } = req.body;
             Session.num1 = num1
             Session.num2 = num2
             Session.correctAnswer = num1 - num2
+        }
             return res.json({status: "pending", message: "Solve this subtraction",data: { num1: Session.num1, num2: Session.num2 }, step: "subtraction"});
         }
         if(Number(userAnswer) === Session.correctAnswer){

@@ -11,7 +11,7 @@ dotenv.config({
     path:'./.env'
 });
 
-app.use('/',router)
+app.use('/game',router)
 
 
 
