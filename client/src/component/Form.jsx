@@ -26,7 +26,7 @@ const Form = ({ setPlayerName }) => {
         setFormData({ name: "" });
         navigate("/game"); 
       } else {
-        alert("Something went wrong!");
+        alert("Error!");
       }
     } catch (error) {
       console.error("Error:", error);
